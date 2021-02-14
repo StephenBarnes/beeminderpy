@@ -1,4 +1,4 @@
 beeminderpy
 ===========
 
-python wrapper for beeminder api
+Python wrapper for Beeminder API.
