@@ -79,6 +79,9 @@ class Beeminder:
         return datapoint
     return None
 
+  def create_day_datapoint(self, username, goalname, value, daystamp, comment=None, requestid=None):
+    return self.create_datapoint(username, goalname, value, daystamp=daystamp, comment=comment, requestid=requestid)
+
   def set_day_datapoint(self, username, goalname, value, daystamp, comment=None, requestid=None):
     """
     Checks for a datapoint with the given datestamp. If one is found, update it to have given value
