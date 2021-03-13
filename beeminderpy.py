@@ -95,6 +95,23 @@ class Beeminder:
       timestamp = datetime.datetime.combine(daystamp, datetime.datetime.min.time())
       return (False, self.update_datapoint(username, goalname, to_replace['id'], value, timestamp=timestamp, comment=comment))
 
+  def set_goal_aggday(self, username, goalname, new_aggday):
+      url = "%s/users/%s/goals/%s.json" % (self.base_url, username, goalname)
+      params = {
+              'auth_token': self.auth_token,
+              'aggday': new_aggday,
+              }
+      return self.call_api(url, params, 'PUT')
+
+  def get_goals(self, username):
+      url = "%s/users/%s/goals" % (self.base_url, username)
+      result = self.call_api(url, {'auth_token': self.auth_token}, 'GET')
+      return json.loads(result)
+
+  def get_goal_names(self, username):
+      goals = self.get_goals(username)
+      return [goal['slug'] for goal in goals]
+
   def call_api(self, url, params, method='GET'):
     pruned_params = {k: v for (k, v) in params.items() if v is not None}
     encoded_params = urlencode(pruned_params).encode('utf-8')
